@@ -30,7 +30,7 @@ class Persona():
             print(f"su imc es: {imc}, estas Obesidad grado II")
         else:
             print(f"su imc es: {imc}, estas Obesidad grado III")
-    def Promedio_asignatura():
+
 
 
 persona1 = Persona("Cristina", "Torres", 23, 1.6, 63) 
@@ -46,5 +46,4 @@ print(f"{persona1.peso}")
 persona1.hablar()
 persona2.caminar()
 persona1.Calcular_Imc()
-        
 
