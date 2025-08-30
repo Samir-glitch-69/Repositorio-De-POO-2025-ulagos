@@ -6,3 +6,10 @@ Examen/
 Guias/
 Labs/
 Parcial/
+# pip install numpy pandas matplotlib pygame
+# import numpy as np
+# import pandas as pd
+# import matplotlib.pyplot as plt
+# import pygame
+# import json
+# import sys
