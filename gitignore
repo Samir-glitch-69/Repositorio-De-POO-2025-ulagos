@@ -2,8 +2,9 @@
 Contenido/
 Materia/
 Ejercicios/
-Examen/
 Guias/
+Examen/
+Retos/
 Labs/
 Parcial/
 # pip install numpy pandas matplotlib pygame
