@@ -8,8 +8,9 @@ class Coche:
             marca (str): La marca del coche
             gasolina (float): La cantidad inicial de gasolina en litros
         """
-        self.marca = marca
-        self.gasolina = gasolina
+        #le faltaba colocar el str y el float, el kmetros receorrido ya estaba definido como un float
+        self.marca = str(marca)
+        self.gasolina = float(gasolina)
         self.kilometros_recorridos = 0.0
     
     def conducir(self, kilometros):
@@ -20,6 +21,7 @@ class Coche:
         Args:
             kilometros (float): Kilómetros a recorrer
         """
+        #por bucle zerodivision
         if kilometros <= 0:
             print("La distancia debe ser mayor a 0 kilómetros.")
             return
@@ -31,6 +33,7 @@ class Coche:
             # Hay suficiente gasolina para el viaje completo
             self.kilometros_recorridos += kilometros
             self.gasolina -= gasolina_necesaria
+            # se coloca el .2f para abreviar los decimales
             print(f"Has conducido {kilometros} km. Gasolina restante: {self.gasolina:.2f} litros.")
         else:
             # No hay suficiente gasolina, conducir solo hasta donde alcance
@@ -88,3 +91,9 @@ if __name__ == "__main__":
     
     # Mostrar estado final
     mi_coche.mostrar_estado()
+
+    """
+    colocar el objetivo de cada def debajo para dar conteexto
+    colocar los argumentos de cada uno de los def debajo para poder ver los errores
+
+    """
