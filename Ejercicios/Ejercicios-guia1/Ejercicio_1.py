@@ -20,7 +20,12 @@ class ReservaHostal():
 #Un método para calcular la duración de la estadía del cliente.
 
 #suponiendo que no tenemos el datetime ni ningun tipo de importacion se va a usar un formato de 365 dias 
+# que se va a hacer?
+#vamos a utilizar una "formula de dias" que se basa en contar desde el dia 0 al dia asignado 
 
-#suponiendo que el dia 5 de septiembre es el 05-09-2025 entonces hacemos un promedio de 9 x 30 y los 5 dias
+
+    def duración_estadía_cliente(self):
+
+
 
 
