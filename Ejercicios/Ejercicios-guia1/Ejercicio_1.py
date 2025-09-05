@@ -2,16 +2,13 @@
 class ReservaHostal():
 
 #se crea los componentes de la clase
-    def __init__(self, Nombre_cliente, dia_entrada, mes_entrada, dia_salida, mes_salida, num_habitacion):
+    def __init__(self, Nombre_cliente, fecha_entrada, feecha_salida ,num_habitacion):
 
 #definiendo cada componente
         Nombre_cliente = str(Nombre_cliente)
 
-        dia_entrada = int(dia_entrada)
-        mes_salida = int(mes_salida)
-
-        dia_salida = int(dia_salida)
-        mes_entrada = int(mes_entrada)
+        fecha_entrada = int(fecha_entrada)
+        feecha_salida = int(feecha_salida)
         
         num_habitacion = int(num_habitacion)
 
@@ -25,6 +22,14 @@ class ReservaHostal():
 
 
     def duración_estadía_cliente(self):
+
+    for self.fecha_entrada in self.fecha_salida
+        i += 1
+        
+    print(f"Su duracion de estadia es de {i} dias")
+
+
+        
 
 
 
