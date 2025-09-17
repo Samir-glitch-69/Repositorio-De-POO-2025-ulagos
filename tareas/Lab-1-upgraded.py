@@ -2,6 +2,8 @@
 class Gato():
     # Atributos de los gatos o felinos
     def __init__(self, nombre, edad, lvl_energia, lvl_hambre):
+        # Mejorando con encapsulacion a variables que no deberieran cambiarse
+        # Aprendiendo que no todos los atributos tienen que ser parte del objeto comocaant-de-cambio-de-nmombre
         self.nombre = str(nombre)
         self.__edad = int(edad)
         self.__lvl_energia = int(lvl_energia)
@@ -9,6 +11,7 @@ class Gato():
         self.__cantidades_de_cambio_de_nombre = 0
     
     # Realizando los get ( getter )
+    # Se realizan para poder tener la info de un atributo en el instante
 
     def get_edad(self):
         return self.__edad
@@ -24,7 +27,7 @@ class Gato():
 
     # Función de gatos jugando - pierden 5 de hambre y energía
     def cats_playing(self):
-        # Restamos 5 a energía y hambre (pero no menos de 0)
+        # Restamos 5 a energía y hambre (pero no menos de 0) ( hecho por ia lo tenia malo )
         self.__lvl_energia = max(0, self.__lvl_energia - 5)
         self.__lvl_hambre = max(0, self.__lvl_hambre - 5)
         
@@ -33,7 +36,7 @@ class Gato():
 
     # Función de los gatos comiendo - recuperan energía y sacian hambre
     def cat_eating(self):
-        # Sumamos 5 a energía y hambre (pero no más de 100)
+        # Sumamos 5 a energía y hambre (pero no más de 100) ( hecho por ia lo tenia malo )
         self.__lvl_energia = min(100, self.__lvl_energia + 5)
         self.__lvl_hambre = min(100, self.__lvl_hambre + 5)
         
@@ -42,6 +45,7 @@ class Gato():
 
     # Función de info de los gatos
     def __str__(self):
+        # Me falto el return
         return (f"Gato: {self.nombre}, Edad: {self.__edad} años, "
                 f"Energía: {self.__lvl_energia}, Hambre: {self.__lvl_hambre}")
 
@@ -60,17 +64,20 @@ class Espacio_Cafe():
     # Método para mover un gato al espacio
     def mover_gato(self, gato):
         # Verificamos si hay espacio
+        # Lo tenia malo, era con el propio gatos y la capacidad maxima
         if len(self.__gatos_en_espacio) >= self.capacidad_maxima:
             print(f"¡Excede la cantidad máxima de gatos en |{self.nombre_espacio}|!")
             return False
         else:
             # Añadimos el gato a la lista
+            # Algo cerca pero con errores de sintaxis
             self.__gatos_en_espacio.append(gato)
             print(f"El gato {gato.nombre} se movió hacia |{self.nombre_espacio}|")
             return True
 
     # Método para remover un gato del espacio
     def remover_gato(self, gato):
+            # Algo cerca pero con errores de sintaxis
         if gato in self.__gatos_en_espacio:
             self.__gatos_en_espacio.remove(gato)
             print(f"El gato {gato.nombre} salió de |{self.nombre_espacio}|")
@@ -80,6 +87,7 @@ class Espacio_Cafe():
             return False
 
     # Mostrar información de los gatos en el espacio
+    # Algo cerca pero con errores de sintaxis
     def info_gatos(self):
         if not self.__gatos_en_espacio:
             print(f"No hay gatos en |{self.nombre_espacio}|")
