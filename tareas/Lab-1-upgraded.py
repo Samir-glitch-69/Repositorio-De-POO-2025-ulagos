@@ -1,5 +1,6 @@
 # Creando el constructor
 class Gato():
+    
     # Atributos de los gatos o felinos
     def __init__(self, nombre, edad, lvl_energia, lvl_hambre):
         # Mejorando con encapsulacion a variables que no deberieran cambiarse
@@ -9,7 +10,51 @@ class Gato():
         self.__lvl_energia = int(lvl_energia)
         self.__lvl_hambre = int(lvl_hambre)
         self.__cantidades_de_cambio_de_nombre = 0
+
+
+        # Realizando los set ( setters )
+        # Los setters son formas de darle una variable al atributo del objeto
+
+    def set_nombre(self, new_nombre):
+        if not new_nombre or new_nombre.strip() == "":
+            print(f"El nombre no puede estar vacio")
+            return False
+        if len(new_nombre) > 15:
+            print(f"el nombre tiene que ser menor a 15 caracteres")
+            return False
+        if new_nombre == self.nombre:
+            print(f"el gatao tiene el mismo nombre")
+            return False
+
+        print(f"Cambiando nombre {self.nombre} a {new_nombre}")    
+        self.nombre = new_nombre
+        self.__cantidades_de_cambio_de_nombre += 1
+        print(f"El gato a cambiado {self.__cantidades_de_cambio_de_nombre}")
+        return True
     
+    def set_edad(self):
+        print(f"no se puede modificar la edad de un gato!!")
+        print(f"Edad actual: {self.__edad}")
+
+    def set_lvl_energia(self, new_energy):
+        if 0 <= new_energy <= 100:
+            self.__lvl_energia = new_energy
+            print(F"energia establecida a {new_energy}")
+        else:
+            print(F"la energia debe estar entre 0 y 100")
+    
+    def set_lvl_hambre(self, new_hambre):
+        if new_hambre < 0:
+            print(f"hambre muy baja, estableciendo minimo 0")
+            self.__lvl_hambre = 0
+        elif new_hambre > 100:
+            print(f"hambre muy alta estableciendo el maximo 100")
+            self.__lvl_hambre = 100
+        else:
+            self.__lvl_hambre = new_hambre
+            print(f"hambre establecida a {new_hambre}")
+
+
     # Realizando los get ( getter )
     # Se realizan para poder tener la info de un atributo en el instante
 
