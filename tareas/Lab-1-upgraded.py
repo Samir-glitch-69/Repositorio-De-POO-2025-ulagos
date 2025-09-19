@@ -109,7 +109,7 @@ class Gatorobot(Gato):
 
         self.__bateria = 100
         self.__aceite = 100
-        self.__version = 1.0
+        self.__version = "1.0"
 
     # Realizando los set ( setters )
     def set_bateria(self, new_bateria):
@@ -200,7 +200,8 @@ class Gatorobot(Gato):
         # Tu lógica especial aquí
         self.__bateria = max(0, self.__bateria - 3)  # Gastar batería
         # También gastar energía normal (llamar al método original)
-        super().cats_playing()  # ← Ejecuta el método del padre también
+        # super().cats_playing()  # ← Ejecuta el método del padre también esto es para hacer doble funciones una dentro de otra
+        # pero un gato no es igual a un gatorobot
 
         print("🤖 MODO JUEGO ROBOT ACTIVADO")
         return super().cat_eating()
@@ -228,7 +229,7 @@ class Espacio_Cafe():
 
     # Método para remover un gato del espacio
     def remover_gato(self, gato):
-            # Algo cerca pero con errores de sintaxis
+        # Algo cerca pero con errores de sintaxis
         if gato in self.__gatos_en_espacio:
             self.__gatos_en_espacio.remove(gato)
             print(f"El gato {gato.nombre} salió de |{self.nombre_espacio}|")
@@ -251,7 +252,7 @@ class Espacio_Cafe():
     def info_espacio(self):
         ocupacion = len(self.__gatos_en_espacio)
         print(f"\nEspacio: {self.nombre_espacio}")
-        print(f"Capacidad: {ocupacion}/{self.capacidad_maxima}")
+        print(f"Capacidad: {ocupacion}/{self.__capacidad_maxima}")
 
 
 # Definiendo a los gatos (CORRECCIÓN: crear objetos, no tuplas) 
