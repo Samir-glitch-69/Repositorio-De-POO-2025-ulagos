@@ -172,12 +172,38 @@ class Gatorobot(Gato):
     def get_version(self):
         return self.__version
 
-    # Funciónes
+    # Funciónes propias de los gato robot
 
+    def cambio_de_baterias(self):
+        print(f"Cambiando las baterias de {self.__bateria} a 100%")
+        self.__bateria = 100
 
+    def cambio_de_aceite(self):
+        print(f"Cambiando el aceite de {self.__aceite} a 100%")
+        self.__aceite = 100
 
+    def primera_version(self):
+        print(f"cambiando la version {self.__version} a la primera")
+        self.__version = 1.0
 
+    # creando el polimorfismo de las anteriores funciones del gato principal ( clase principal ), 
+    # el primer ejemplo con ia por que no entendia como funcionaba
 
+    # se coloca la misma funcion de la herencia o del gato principal y se modifica la clase a otra para que 
+    # cambie su funcion cuando se usa en un gato robot
+    def cats_playing(self):
+        # Los robots juegan diferente - gastan batería en lugar de solo energía
+        if self.__bateria < 10:
+            print("🔋 Batería muy baja para jugar")
+            return False
+
+        # Tu lógica especial aquí
+        self.__bateria = max(0, self.__bateria - 3)  # Gastar batería
+        # También gastar energía normal (llamar al método original)
+        super().cats_playing()  # ← Ejecuta el método del padre también
+
+        print("🤖 MODO JUEGO ROBOT ACTIVADO")
+        return super().cat_eating()
 
 # Creando la clase del espacio del café
 class Espacio_Cafe():
