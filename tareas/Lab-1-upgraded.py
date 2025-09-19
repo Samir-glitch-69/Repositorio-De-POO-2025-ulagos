@@ -209,14 +209,14 @@ class Gatorobot(Gato):
 class Espacio_Cafe():
     def __init__(self, nombre_espacio, capacidad_maxima):
         self.nombre_espacio = str(nombre_espacio)
-        self.capacidad_maxima = int(capacidad_maxima)
+        self.__capacidad_maxima = int(capacidad_maxima)
         self.__gatos_en_espacio = []  # Lista de objetos Gato
 
     # Método para mover un gato al espacio
     def mover_gato(self, gato):
         # Verificamos si hay espacio
         # Lo tenia malo, era con el propio gatos y la capacidad maxima
-        if len(self.__gatos_en_espacio) >= self.capacidad_maxima:
+        if len(self.__gatos_en_espacio) >= self.__capacidad_maxima:
             print(f"¡Excede la cantidad máxima de gatos en |{self.nombre_espacio}|!")
             return False
         else:
