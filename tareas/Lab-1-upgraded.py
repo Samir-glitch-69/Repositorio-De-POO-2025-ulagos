@@ -100,103 +100,80 @@ class Gatorobot(Gato):
     def __init__(self, nombre, edad, lvl_energia, lvl_hambre):
         super().__init__(nombre, edad, lvl_energia, lvl_hambre)
         # El super realiza lo de abajo con herencia de la clase principal
+        #self.__nombre = str(__nombre) no se coloca nombre por la herencia duhu
         """self.nombre = str(nombre)
         self.__edad = int(edad)
         self.__lvl_energia = int(lvl_energia)
         self.__lvl_hambre = int(lvl_hambre)
         self.__cantidades_de_cambio_de_nombre = 0"""
 
-        #self.__nombre = str(__nombre) no se coloca nombre por la herencia duhu
-
         self.__bateria = 100
         self.__aceite = 100
-        self.__version = "1.0"
+        self.__version = 1.0
 
-        # Realizando los set ( setters )
-        # Los setters son formas de darle una variable al atributo del objeto
-
-    def set_nombre(self, new_nombre):
-        if not new_nombre or new_nombre.strip() == "":
-            print(f"El nombre no puede estar vacio")
-            return False
-        if len(new_nombre) > 15:
-            print(f"el nombre tiene que ser menor a 15 caracteres")
-            return False
-        if new_nombre == self.nombre:
-            print(f"el gatao tiene el mismo nombre")
-            return False
-
-        print(f"Cambiando nombre {self.nombre} a {new_nombre}")    
-        self.nombre = new_nombre
-        self.__cantidades_de_cambio_de_nombre += 1
-        print(f"El gato a cambiado {self.__cantidades_de_cambio_de_nombre}")
-        return True
-    
-    def set_edad(self):
-        print(f"no se puede modificar la edad de un gato!!")
-        print(f"Edad actual: {self.__edad}")
-
-    def set_lvl_energia(self, new_energy):
-        if 0 <= new_energy <= 100:
-            self.__lvl_energia = new_energy
-            print(F"energia establecida a {new_energy}")
+    # Realizando los set ( setters )
+    def set_bateria(self, new_bateria):
+        if 0 <= new_bateria <= 100:
+            print(f"🔋 Batería cambiada de {self.__bateria}% a {new_bateria}%")
+            self.__bateria = new_bateria
+            return True
         else:
-            print(F"la energia debe estar entre 0 y 100")
-    
-    def set_lvl_hambre(self, new_hambre):
-        if new_hambre < 0:
-            print(f"hambre muy baja, estableciendo minimo 0")
-            self.__lvl_hambre = 0
-        elif new_hambre > 100:
-            print(f"hambre muy alta estableciendo el maximo 100")
-            self.__lvl_hambre = 100
-        else:
-            self.__lvl_hambre = new_hambre
-            print(f"hambre establecida a {new_hambre}")
+            print(f"bateria seleccionada incorrecta")
+            return False
 
+    def set_aceite(self, new_aceite):
+        if 0 <= new_aceite <= 100:
+            print(F"el aceite seleccionado es correcto:{new_aceite}, cambiando {self.__aceite}")
+            self.__aceite = new_aceite
+            return True
+        else:
+            print(f"aceite seleccionada incorrecta")
+            return False
+        
+    # en str no funciona por la complejidad de diferencias las versiones
+    # en float tampoco por decimales como 1.9 y 1.10 1.10 es mayor pero en decimales en menor 
+    # me costo una banda par poder hacerlo solo me ayude con ia y quede loco
+
+    def set_version(self, new_version):
+        # 1. Manejo del caso de cadena vacía o formato incorrecto.
+        if not new_version:
+            print("Error: Versión inválida o vacía.")
+            return False
+
+        try:
+            # 2. Convertir las versiones a listas de números enteros para una comparación precisa.
+            current_parts = [int(p) for p in self.__version.split('.')]
+            new_parts = [int(p) for p in new_version.split('.')]
+        except ValueError:
+            # Capturar errores si alguna parte de la versión no es un número.
+            print("Error: El formato de la versión no es numérico (ej: '1.0').")
+            return False
+
+        # 3. Comparar las listas de números.
+        if new_parts > current_parts:
+            print(f"La versión {new_version} es correcta, actualizando...")
+            self.__version = new_version
+            return True
+        elif new_parts == current_parts:
+            print(f"Las versiones no pueden ser las mismas.")
+            return False
+        else:  # new_parts < current_parts
+            print(f"La versión no puede ser desactualizada, debe ser la más reciente.")
+            return False
 
     # Realizando los get ( getter )
-    # Se realizan para poder tener la info de un atributo en el instante
 
-    def get_edad(self):
-        return self.__edad
-        
-    def get_lvl_energia(self):
-        return self.__lvl_energia
+    def get_bateria(self):
+        return self.__bateria
 
-    def get_lvl_hambre(self):
-        return self.__lvl_hambre
-    
-    def get_cantidad_cambio_de_nombre(self):
-        return self.__cantidades_de_cambio_de_nombre
+    def get_aceite(self):
+        return self.__aceite
 
-    # Función de gatos jugando - pierden 5 de hambre y energía
-    def cats_playing(self):
-        # Restamos 5 a energía y hambre (pero no menos de 0) ( hecho por ia lo tenia malo )
-        self.__lvl_energia = max(0, self.__lvl_energia - 5)
-        self.__lvl_hambre = max(0, self.__lvl_hambre - 5)
-        
-        print(f"El gato |{self.nombre}| está jugando!")
-        print(f"Energía: {self.__lvl_energia} | Hambre: {self.__lvl_hambre}")
+    def get_version(self):
+        return self.__version
 
-    # Función de los gatos comiendo - recuperan energía y sacian hambre
-    def cat_eating(self):
-        # Sumamos 5 a energía y hambre (pero no más de 100) ( hecho por ia lo tenia malo )
-        self.__lvl_energia = min(100, self.__lvl_energia + 5)
-        self.__lvl_hambre = min(100, self.__lvl_hambre + 5)
-        
-        print(f"El gato {self.nombre} está comiendo!")
-        print(f"Energía: {self.__lvl_energia} | Hambre: {self.__lvl_hambre}")
+    # Funciónes
 
-    # Función de info de los gatos
-    def __str__(self):
-        # Me falto el return
-        return (f"Gato: {self.nombre}, Edad: {self.__edad} años, "
-                f"Energía: {self.__lvl_energia}, Hambre: {self.__lvl_hambre}")
-
-    # Función del destructor
-    def __del__(self):
-        print(f"El gato {self.nombre} se escapó de la cafetería malvada :( ")
 
 
 
