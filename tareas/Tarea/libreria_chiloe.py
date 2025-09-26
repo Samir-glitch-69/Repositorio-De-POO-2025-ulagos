@@ -28,32 +28,38 @@ class Libreria:
             raise ValueError("El descuento tiene qe estar entre 0.05 y 0.10")
 
     def agregar_libro_catalogo(self, titulo, precio):
-        assert precio > 0, ("El precio debe ser mayor a 0")
+        if precio <= 0:
+            raise ValueError("El precio debe ser mayor a 0")
         self.__catalogo[titulo] = precio
 
     def mostrar_catalogo(self):
         print("\n==============================")
-        print("CATALOGO DE LIBROS".center(30, "-"))
+        print("catalogo de libros".center(30, "-"))
         print("==============================")
-        for titulo, precio in self.__catalogo.items():
-            print(f"{titulo} - ${precio}")
-            print("------------------------------")
+        if not self.__catalogo:
+            print("El catalogo esta vacio")
+        else:
+            for titulo, precio in self.__catalogo.items():
+                print(f"{titulo} - ${precio}")
+                print("------------------------------")
 
     def agregar_al_carrito(self, titulo: str):
-        titulo_normalizado = titulo.lower()
+        titulo_normalizado = titulo.strip().lower()
         titulos_catalogo = {t.lower(): t for t in self.__catalogo.keys()}  
 
         if titulo_normalizado in titulos_catalogo:
             self.__carrito.append(titulos_catalogo[titulo_normalizado])
         else:
-            raise AssertionError("El libro no existe en el catalogo")
+            raise AssertionError("El libro no existe dentro del catalogo")
 
     def calcular_total(self, frecuente=False):
+        if not self.__carrito:
+            print("El carrito esta vacio")
+            return 0
         total = sum(self.__catalogo[titulo] for titulo in self.__carrito)
-        assert total >= 0, ("El total no puede ser negativo")
 
         if frecuente:
-            total = Libreria.aplicar_descuento(total, Libreria.__descuento_socios)
+            total = Libreria.aplicar_descuento(total, Libreria.get_descuento())
         return total
 
     def finalizar_compra(self):
@@ -65,36 +71,58 @@ class Libreria:
 
     @staticmethod
     def aplicar_descuento(monto, descuento):
-        assert monto >= 0, "El monto tiene que sert mayor a 0"
-        assert 0.05 <= descuento <= 0.10, "El descuento debe estar en el rango de 0.05 a 0.10"
+        if monto < 0:
+            raise ValueError("El monto tiene que sert mayor a 0")
+        if not 0.05 <= descuento <= 0.10:
+            raise ValueError("El descuento debe estar en el rango de 0.05 a 0.10")
         return monto * (1 - descuento)
-
 
 def cargar_libros_desde_txt(nombre_archivo):
     catalogo = {}
-    with open(nombre_archivo, "r", encoding="utf-8") as f:
-        for linea in f:
-            partes = linea.strip().split(",")
-            if len(partes) == 2:
-                titulo, precio = partes
-                catalogo[titulo] = float(precio)
+    try:
+        with open(nombre_archivo, "r", encoding="utf-8") as f:
+            for linea in f:
+                linea = linea.strip()
+                if not linea:
+                    continue
+                partes = linea.split(",")
+                if len(partes) == 2:
+                    titulo, precio = partes
+                    try:
+                        catalogo[titulo.strip()] = float(precio.strip())
+                    except ValueError:
+                        print(f"Precio invalido en la linea: {linea}")
+                else:
+                    print(f"Linea mal formada: {linea}")
+    except FileNotFoundError:
+        print(f"No se encontro el archivo: {nombre_archivo}")
     return catalogo
 
 def cargar_socios(nombre_archivo):
     socios = {}
-    with open(nombre_archivo, "r", encoding="utf-8") as f:
-        for linea in f:
-            partes = linea.strip().split(",")
-            if len(partes) == 2:
-                nombre, compras = partes
-                socios[nombre] = int(compras)
+    try:
+        with open(nombre_archivo, "r", encoding="utf-8") as f:
+            for linea in f:
+                linea = linea.strip()
+                if not linea:
+                    continue
+                partes = linea.split(",")
+                if len(partes) == 2:
+                    nombre, compras = partes
+                    try:
+                        socios[nombre.strip()] = int(compras.strip())
+                    except ValueError:
+                        print(f"Compras invalidas en la linea: {linea}")
+                else:
+                    print(f"Linea mal formada: {linea}")
+    except FileNotFoundError:
+        print(f"No se encontro el archivo: {nombre_archivo}")
     return socios
 
 def guardar_socios(nombre_archivo, socios):
     with open(nombre_archivo, "w", encoding="utf-8") as f:
         for nombre, compras in socios.items():
             f.write(f"{nombre},{compras}\n")
-
 
 if __name__ == "__main__":
     libreria = Libreria("Libreria chiloe")
@@ -105,7 +133,7 @@ if __name__ == "__main__":
 
     socios = cargar_socios("socios.txt")
 
-    nombre_cliente = input("Ingresa tu nombre: ")
+    nombre_cliente = input("Ingresa tu nombre: ").strip()
     if nombre_cliente not in socios:
         socios[nombre_cliente] = 0
 
@@ -115,7 +143,7 @@ if __name__ == "__main__":
         print("2. Agregar libro al carrito")
         print("3. Total a pagar")
         print("4. Salir")
-        opcion = input("Elige una opción: ")
+        opcion = input("Elige una opcion: ").strip()
 
         if opcion == "1":
             libreria.mostrar_catalogo()
@@ -132,14 +160,17 @@ if __name__ == "__main__":
             compras_cliente = socios[nombre_cliente]
             frecuente = compras_cliente >= 3
             total = libreria.calcular_total(frecuente)
-            if frecuente:
-                print(f"Total con el descuento de la libreria aplicado: ${total}")
+            if total == 0:
+                print("No hay libros en el carrito.")
             else:
-                print(f"Total a pagar (sin descuento): ${total}")
-                print(f"Llevas {compras_cliente} compras, con una cuarta compra obtienes un descuento")
-            libreria.finalizar_compra()
-            socios[nombre_cliente] += 1
-            guardar_socios("socios.txt", socios)
+                if frecuente:
+                    print(f"Total con el descuento de la libreria aplicado: ${total}")
+                else:
+                    print(f"Total a pagar (sin descuento): ${total}")
+                    print(f"Llevas {compras_cliente} compras, con una cuarta compra obtienes un descuento")
+                libreria.finalizar_compra()
+                socios[nombre_cliente] += 1
+                guardar_socios("socios.txt", socios)
 
         elif opcion == "4":
             print()
